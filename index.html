@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Подходит ли мне банкротство</title>
+<meta name="description" content="Бесплатная проверка за 2 минуты: подходит ли вам банкротство через МФЦ или суд, сколько стоит, какие риски. Данные не покидают ваш браузер.">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--brand:#0f766e;--brand2:#2563eb}
+.q{margin:0 0 18px}.q>b{display:block;margin-bottom:8px}
+.opts-r{display:flex;flex-wrap:wrap;gap:8px}
+.opts-r label{cursor:pointer}.opts-r input{position:absolute;opacity:0;pointer-events:none}
+.opts-r span{display:inline-block;border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;background:var(--field);font-weight:600;font-size:15px;transition:all .15s}
+.opts-r input:checked+span{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-color:transparent}
+.opts-r input:focus-visible+span{outline:3px solid var(--brand)}
+.hint{font-size:13px;color:var(--mute);margin-top:6px}
+.res-card{border-radius:var(--r);padding:22px;color:#fff;margin-bottom:14px}
+.res-card.mfc{background:linear-gradient(135deg,#059669,#10b981)}.res-card.court{background:linear-gradient(135deg,#2563eb,#0ea5e9)}
+.res-card.stop{background:linear-gradient(135deg,#64748b,#94a3b8)}
+.res-card .big{font-size:clamp(22px,4vw,30px);font-weight:800;margin:4px 0 10px}
+.res-card .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
+.res-card .kpis div{background:rgba(255,255,255,.16);border-radius:12px;padding:10px 12px}.res-card .kpis span{display:block;font-size:13px;opacity:.9}
+ul.docs{margin:6px 0 14px;padding-left:20px}
+.legal{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;background:var(--field)}
+</style>
+</head>
+<body>
+<header class="hero"><div class="in">
+<h1>Подходит ли вам банкротство?</h1>
+<p>Ответьте на 9 вопросов - и узнаете, можно ли пройти банкротство бесплатно через МФЦ, нужен ли суд, сколько это стоит и чем рискуете.</p>
+<div class="chips"><span class="chip">🔒 Данные не покидают браузер</span><span class="chip">⏱ 2 минуты</span><span class="chip">📜 По закону 127-ФЗ</span><span class="chip">🆓 Без телефона и регистрации</span></div>
+</div></header>
+
+<main class="wrap">
+<section class="step" id="form">
+<h2><span class="num">1</span>Ваша ситуация</h2>
+<p class="sub">Результат пересчитывается сразу.</p>
+
+<div class="q"><b>Общая сумма долгов</b>
+<label class="fld" style="max-width:320px"><span class="box"><input id="debt" type="number" min="0" step="1000" inputmode="decimal" placeholder="350 000"><span class="unit">₽</span></span></label>
+<div class="hint">Посчитать точнее поможет <a href="https://kalkulyator-dolgov.github.io/" target="_blank" rel="noopener">калькулятор погашения долгов</a>.</div></div>
+
+<div class="q"><b>Есть ли просрочка больше 3 месяцев?</b><div class="opts-r" data-k="overdue3m">
+<label><input type="radio" name="overdue3m" value="1"><span>Да</span></label><label><input type="radio" name="overdue3m" value="0"><span>Нет</span></label></div></div>
+
+<div class="q"><b>Можете платить по графику без новых долгов?</b><div class="opts-r" data-k="canPay">
+<label><input type="radio" name="canPay" value="1"><span>Да</span></label><label><input type="radio" name="canPay" value="0"><span>Нет, денег не хватает</span></label></div></div>
+
+<div class="q"><b>Взыскивают ли долги приставы?</b><div class="opts-r" data-k="ip">
+<label><input type="radio" name="ip" value="none"><span>Нет</span></label>
+<label><input type="radio" name="ip" value="active"><span>Да, производство идёт</span></label>
+<label><input type="radio" name="ip" value="returned"><span>Закрыто: нечего взыскать</span></label></div>
+<div class="hint">Проверить можно в «Банке данных исполнительных производств» на сайте ФССП или на Госуслугах.</div>
+<div id="ipMore" style="margin-top:10px;display:none">
+<label class="fld" style="max-width:320px">Сколько лет назад начали взыскивать<span class="box"><input id="ipYears" type="number" min="0" step="1" inputmode="decimal" placeholder="1"><span class="unit">лет</span></span></label>
+<label class="chk" style="display:flex;gap:8px;margin-top:8px"><input type="checkbox" id="otherActiveIp"> Есть другие незакрытые производства</label></div></div>
+
+<div class="q"><b>Основной доход</b><div class="opts-r" data-k="income">
+<label><input type="radio" name="income" value="salary"><span>Зарплата / подработка</span></label>
+<label><input type="radio" name="income" value="pension"><span>Пенсия</span></label>
+<label><input type="radio" name="income" value="svo"><span>Выплаты участнику СВО</span></label>
+<label><input type="radio" name="income" value="childbenefit"><span>Единое пособие на детей</span></label>
+<label><input type="radio" name="income" value="none"><span>Нет дохода</span></label></div>
+<label class="fld" style="max-width:320px;margin-top:10px">Доход в месяц<span class="box"><input id="incomeMonthly" type="number" min="0" step="1000" inputmode="decimal" placeholder="30 000"><span class="unit">₽</span></span></label></div>
+
+<div class="q"><b>Что из имущества у вас есть?</b><div class="opts-r" data-multi="1">
+<label><input type="checkbox" data-k="mortgage"><span>Жильё в ипотеке</span></label>
+<label><input type="checkbox" data-k="extraRealty"><span>Второе жильё, дача, земля</span></label>
+<label><input type="checkbox" data-k="car"><span>Автомобиль</span></label>
+<label><input type="checkbox" data-k="valuables"><span>Ценное имущество, вклады</span></label></div>
+<div class="hint">Единственное жильё без ипотеки не забирают - его отмечать не нужно.</div></div>
+
+<div class="q"><b>Было ли за 3 года?</b><div class="opts-r" data-multi="1">
+<label><input type="checkbox" data-k="deals3y"><span>Продавал, дарил или переоформлял имущество</span></label>
+<label><input type="checkbox" data-k="director"><span>Я директор или учредитель компании</span></label>
+<label><input type="checkbox" data-k="nonDischarge"><span>Есть алименты, долги за вред здоровью или субсидиарка</span></label></div></div>
+
+<div class="q"><b>Банкротились ли вы раньше?</b><div class="opts-r" data-multi="1">
+<label><input type="checkbox" data-k="bankrupt5y"><span>Через суд за последние 5 лет</span></label>
+<label><input type="checkbox" data-k="extrajudicial5y"><span>Через МФЦ за последние 5 лет</span></label></div></div>
+</section>
+
+<section class="step" id="result">
+<h2><span class="num">2</span>Ваш результат</h2>
+<div id="res"></div>
+</section>
+
+<div class="legal">⚠️ Банкротство влечёт негативные последствия, в том числе ограничения на получение кредита и повторное банкротство в течение пяти лет. Предварительно обратитесь к своему кредитору и в МФЦ.</div>
+
+<h2 style="margin:28px 0 12px">Другие калькуляторы</h2>
+<div class="more">
+<a href="https://kalkulyator-dolgov.github.io/" target="_blank" rel="noopener"><span class="ic">💳</span><b>Погашение долгов</b><small>Как быстрее и дешевле закрыть кредиты</small></a>
+<a href="https://kalkulyator-soc-kontrakta.github.io/" target="_blank" rel="noopener"><span class="ic">🤝</span><b>Социальный контракт</b><small>Сколько может дать государство</small></a>
+<a href="https://avtomatizaciya.github.io/#kalkulyatory" target="_blank" rel="noopener"><span class="ic">🧮</span><b>Все калькуляторы</b><small>Налоги, суды, бизнес</small></a>
+</div>
+<p class="note" style="margin-top:20px">🔒 Ответы обрабатываются только в вашем браузере, на сервер ничего не отправляется, счётчиков нет. Результат справочный, это не юридическая консультация. Нормы: Федеральный закон 127-ФЗ «О несостоятельности (банкротстве)», ст. 213.3, 213.4, 213.28, 213.30, 223.2; ст. 446 ГПК РФ; редакция на 01.10.2026.</p>
+</main>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
